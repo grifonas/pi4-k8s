@@ -31,6 +31,11 @@ Taken from [here](https://alexellisuk.medium.com/walk-through-install-kubernetes
     kubectl -n kube-system delete helmchart traefik traefik-crd
     touch /var/lib/rancher/k3s/server/manifests/traefik.yaml.skip
     systemctl restart k3s```
+- Join another node:
+    ```bash
+    k3sup join --user grifonas --ip 192.168.1.4 --server-ip 192.168.1.161 --server-user grifonas
+    ```
+
 - NGINX Ingress:
     ```bash
     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
