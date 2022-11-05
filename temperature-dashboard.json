@@ -61,14 +61,14 @@
               "axisPlacement": "auto",
               "barAlignment": 0,
               "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
+              "fillOpacity": 4,
+              "gradientMode": "scheme",
               "hideFrom": {
                 "legend": false,
                 "tooltip": false,
                 "viz": false
               },
-              "lineInterpolation": "linear",
+              "lineInterpolation": "smooth",
               "lineWidth": 1,
               "pointSize": 5,
               "scaleDistribution": {
@@ -177,7 +177,7 @@
                 },
                 {
                   "color": "#EAB839",
-                  "value": 70
+                  "value": 60
                 },
                 {
                   "color": "red",
@@ -261,14 +261,14 @@
               "axisPlacement": "auto",
               "barAlignment": 0,
               "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
+              "fillOpacity": 7,
+              "gradientMode": "scheme",
               "hideFrom": {
                 "legend": false,
                 "tooltip": false,
                 "viz": false
               },
-              "lineInterpolation": "linear",
+              "lineInterpolation": "smooth",
               "lineWidth": 1,
               "pointSize": 5,
               "scaleDistribution": {
@@ -377,7 +377,7 @@
                 },
                 {
                   "color": "#EAB839",
-                  "value": 70
+                  "value": 60
                 },
                 {
                   "color": "red",
@@ -458,8 +458,8 @@
         {
           "current": {
             "selected": false,
-            "text": "192.168.1.4:9100",
-            "value": "192.168.1.4:9100"
+            "text": "192.168.1.161:9100",
+            "value": "192.168.1.161:9100"
           },
           "datasource": {
             "type": "prometheus",
@@ -493,6 +493,6 @@
     "timezone": "",
     "title": "Node Temperatures",
     "uid": "QIA3UR57z",
-    "version": 5,
+    "version": 7,
     "weekStart": ""
   }
