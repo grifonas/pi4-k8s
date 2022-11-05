@@ -60,3 +60,26 @@ Taken from [here](https://alexellisuk.medium.com/walk-through-install-kubernetes
     ```bash
     kubectl -n cert-manager apply cluster-issuer.yaml
     ```
+- Monitoring:
+    ```bash
+    op signin --account my.1password.com
+    export GRAFANA_PRIVATE_PASSWORD='op://Private/Grafana-Private/password'
+    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+    helm repo update
+
+    op run -- helm upgrade --install --version 41.7.0 kube-prometheus-stack prometheus-community/kube-prometheus-stack \
+     --namespace monitoring \
+     --set grafana.persistence.enabled=true \
+     --set grafana.ingress.enabled=true \
+     --set grafana.ingress.hosts[0]=grafana.gkon.link \
+     --set grafana.ingress.tls[0].hosts[0]=grafana.gkon.link \
+     --set grafana.ingress.tls[0].secretName=grafana.gkon.link-auto-created \
+     --set grafana.ingress.annotations."cert-manager\.io/cluster-issuer=letsencrypt-prod"  \
+     --set grafana.ingress.annotations."kubernetes\.io/ingress\.class=nginx"  \
+     --set grafana.plugins[0]=grafana-piechart-panel \
+     --set defaultRules.rules.kubeControllerManager=false \
+     --set defaultRules.rules.kubeScheduler=false \
+     --set defaultRules.rules.kubeSchedulerAlerting=false \
+     --set grafana.adminPassword=${GRAFANA_PRIVATE_PASSWORD}
+    ```
+
