@@ -1,0 +1,4 @@
+# persistence:
+#   nextcloudData:
+#     enabled: true
+#     existingClaim: nextcloud-data-pvc

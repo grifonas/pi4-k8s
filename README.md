@@ -60,6 +60,14 @@ Taken from [here](https://alexellisuk.medium.com/walk-through-install-kubernetes
     ```bash
     kubectl -n cert-manager apply cluster-issuer.yaml
     ```
+- NFS Share :
+    ```bash
+    sudo vim /etc/exports
+    # Add: /media/grifonas/2TBHDD-2 *(rw,all_squash,insecure,async,no_subtree_check,anonuid=1000,anongid=1000,no_root_squash)
+    sudo exportfs -ra
+    sudo systemctl restart nfs-kernel-server
+    sudo systemctl status nfs-server
+    ```
 - Monitoring:
     ```bash
     op signin --account my.1password.com
@@ -83,3 +91,25 @@ Taken from [here](https://alexellisuk.medium.com/walk-through-install-kubernetes
      --set grafana.adminPassword=${GRAFANA_PRIVATE_PASSWORD}
     ```
 
+- Nextcloud (not worth it though)
+    ```bash
+    kubectl apply -f nextcloud-data-pvand-pvc.yaml -n nextcloud
+    ```
+    ```bash
+    #export NEXTCLOUD_PRIVATE_POSTGRES_PASSWORD=$(op item get Nextcloud-Private --fields=postgres-password)
+    export NEXTCLOUD_PRIVATE_PASSWORD=$(op item get Nextcloud-Private --fields=password)
+
+    helm repo add nextcloud https://nextcloud.github.io/helm/
+    helm repo update
+    helm upgrade --install -n nextcloud nextcloud nextcloud/nextcloud \
+    --set nextcloud.username=admin \
+    --set nextcloud.password="${NEXTCLOUD_PRIVATE_PASSWORD}" \
+    --set persistence.enabled=true \
+    --set ingress.enabled=true \
+    --set ingress.className=nginx \
+    --set ingress.annotations."cert-manager\.io/cluster-issuer=letsencrypt-prod" \
+    --set ingress.tls[0].hosts[0]=nextcloud.gkon.link \
+    --set ingress.tls[0].secretName=nextcloud.gkon.link-auto-created \
+    --set nextcloud.host=nextcloud.gkon.link \
+    --values nextcloud-values.yaml
+    ```
